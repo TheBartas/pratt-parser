@@ -6,7 +6,7 @@ int main() {
     using ALexer = ::pratt::lexer::Lexer;
 
     // Examples
-    std::string ex1 = "4 - 5 * 6";
+    std::string ex1 = "4 - 5 * 6.1 + var";
 
     // Lexer
     ALexer lexer(std::string_view{ex1});
