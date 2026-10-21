@@ -5,14 +5,19 @@
 #include <vector>
 
 #include "token.hpp"
+#include "ast.hpp"
+
+namespace pratt::debug {
+    using AToken = ::pratt::token::Token;
+    using ATokenType = ::pratt::token::TokenType;
+    using AExpr = ::pratt::ast::expr::Expr;
+}; // pratt::debug
 
 namespace pratt::debug {
     class Printable final {
         public:
-            using AToken = ::pratt::token::Token;
-            using ATokenType = ::pratt::token::TokenType;
-
-            static void showStream(const std::vector<AToken>&, std::ostream&);
+            static void printStream(const std::vector<AToken>&, std::ostream&);
+            static void printAST(const AExpr&);
 
         private:
             static constexpr std::string_view getTokenName(ATokenType type) noexcept {

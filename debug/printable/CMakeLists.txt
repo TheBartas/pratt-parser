@@ -10,4 +10,6 @@ target_include_directories(Printable
 target_link_libraries(Printable
     PRIVATE
         Token
+    PUBLIC
+        AST
 )

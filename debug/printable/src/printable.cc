@@ -2,7 +2,7 @@
 
 namespace pratt::debug {
     // public
-    void Printable::showStream(
+    void Printable::printStream(
         const std::vector<AToken>& tokens,
         std::ostream& out
     ) {
@@ -15,4 +15,9 @@ namespace pratt::debug {
         }
         out << "====================" << std::endl;
     } 
+
+    void Printable::printAST(const AExpr& root) {
+        root.printExpr();
+        std::cout << std::endl;
+    }
 }; // pratt::debug

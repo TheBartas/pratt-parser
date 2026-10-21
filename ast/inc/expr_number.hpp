@@ -10,6 +10,11 @@ namespace pratt::ast::expr {
         public:
             NumberExpr(std::string_view _value) 
                 : value{_value} {}
+
+            void printExpr() const override {
+                std::cout << this->value;
+            }
+            
         private:
             std::string_view value{};   
     };

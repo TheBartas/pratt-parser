@@ -1,5 +1,5 @@
-#ifndef PRATT_PARSING_AST_EXPR_
-#define PRATT_PARSING_AST_EXPR_NUMBER
+#ifndef PRATT_PARSING_AST_EXPR_IDENTIFIER
+#define PRATT_PARSING_AST_EXPR_IDENTIFIER
 
 #include <string_view>
 
@@ -10,6 +10,10 @@ namespace pratt::ast::expr {
         public:
             IdentifierExpr(std::string_view _value) 
                 : value{_value} {}
+
+            void printExpr() const override {
+                std::cout << this->value;
+            }
         private:
             std::string_view value{};   
     };
