@@ -2,6 +2,7 @@
 #define PRATT_PARSING_LEXER_H
 
 #include <vector>
+#include <stdexcept>
 
 #include "token.hpp"
 

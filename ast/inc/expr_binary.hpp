@@ -7,7 +7,7 @@ namespace pratt::ast::expr {
     class BinaryExpr final : public BaseExpr {
         public:
             BinaryExpr(
-                char _op,
+                std::string_view _op,
                 ASTNode _lhs,
                 ASTNode _rhs
             ) 
@@ -22,7 +22,7 @@ namespace pratt::ast::expr {
             }
             
         private:
-            char op;
+            std::string_view op{};
             ASTNode lhs;
             ASTNode rhs;
 

@@ -93,6 +93,7 @@ namespace pratt::lexer {
         ) {
             tokens.push_back(token);
         }
+        if (tokens.empty()) throw std::runtime_error("[Error] No tokens in stream <Lexer>"); // [TODO:0x0001]
         tokens.push_back(AToken{ATokenType::EoF});
         return tokens;
     }

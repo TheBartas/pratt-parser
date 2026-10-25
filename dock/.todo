@@ -1,0 +1,4 @@
+### TODO-list ###
+# If this list is empty, all TODOs are implemented.
+# Ids must be unique and can't be reused to next TODOs
+[TODO:0x0001] Change into error handler class

@@ -13,5 +13,6 @@ add_executable(PrattParser main.cc)
 target_link_libraries(PrattParser
     PRIVATE
         Lexer
+        Parser
         Printable
 )
