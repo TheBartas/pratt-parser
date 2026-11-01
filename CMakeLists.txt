@@ -18,5 +18,5 @@ target_link_libraries(PrattParser
     PRIVATE
         Lexer
         Parser
-        Printable
+        Debug
 )

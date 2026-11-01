@@ -70,6 +70,10 @@ namespace pratt::lexer {
                 return Lexer::handleToken(ATokenType::ASTERISK);
             case '/':
                 return Lexer::handleToken(ATokenType::SLASH);
+            case '(':
+                return Lexer::handleToken(ATokenType::ROUND_BRACKET_OPEN);
+            case ')':
+                return Lexer::handleToken(ATokenType::ROUND_BRACKET_CLOSE);
             case '=':
                 return Lexer::handleToken(ATokenType::EQUAL);        
         }

@@ -15,9 +15,11 @@ namespace pratt::parser {
         
         while (true) {
             const auto& op = Parser::peek();
-            if (!Parser::parseInfix(op.getType())) break;
+            const auto type = op.getType();
+
+            if (!Parser::parseInfix(type)) break;
             
-            const auto& [l_bp, r_bp] = Parser::infixBindingPower(op.getType());
+            const auto& [l_bp, r_bp] = Parser::infixBindingPower(type);
             if (l_bp < min_bp) break;
 
             (void)Parser::advance();
@@ -30,23 +32,32 @@ namespace pratt::parser {
 
     ASTNode Parser::parsePrefix() {
         const auto& token = Parser::advance();
+
         switch (token.getType()) {
             case ATokenType::INT:
             case ATokenType::FLOAT:
                 return std::make_unique<NumberNode>(token.getLexeme());
             case ATokenType::IDENTIFIER:
                 return std::make_unique<IdentifierNode>(token.getLexeme());
+            case ATokenType::ROUND_BRACKET_OPEN:
+                auto expr = Parser::parseExpression(NUD);
+
+                if (Parser::peek().getType() != ATokenType::ROUND_BRACKET_CLOSE) std::runtime_error("[Error] Expected \")\"");
+
+                (void)Parser::advance();
+                return expr;
         }
         throw std::runtime_error("[Error] Bad token in <parsePrefix>!"); // [TODO:0x0001]
     } 
 
-    bool Parser::parseInfix(const ATokenType type) {
+    bool Parser::parseInfix(const ATokenType type) const {
         switch (type) {
             case ATokenType::PLUS:
             case ATokenType::MINUS:
             case ATokenType::ASTERISK:
             case ATokenType::SLASH:
                 return true;
+            case ATokenType::ROUND_BRACKET_CLOSE:
             case ATokenType::EoF:
                 return false;
             default:

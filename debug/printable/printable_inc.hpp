@@ -1,5 +1,5 @@
-#ifndef PRATT_PARSING_DEBUG_H
-#define PRATT_PARSING_DEBUG_H
+#ifndef PRATT_PARSING_PRINTABLE_INC_H
+#define PRATT_PARSING_PRINTABLE_INC_H
 
 #include "inc/printable.hpp"
 

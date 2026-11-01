@@ -44,7 +44,7 @@ namespace pratt::parser {
             ASTNode parseExpression(uint16_t);
 
             ASTNode parsePrefix();
-            bool parseInfix(const ATokenType);
+            bool parseInfix(const ATokenType) const;
             constexpr std::pair<uint16_t, uint16_t> infixBindingPower(ATokenType type) const {
                 switch (type) {
                     case ATokenType::MINUS:

@@ -34,6 +34,8 @@ namespace pratt::debug {
                         case ATokenType::MINUS: return "MINUS";
                         case ATokenType::ASTERISK: return "ASTERISK";
                         case ATokenType::SLASH: return "SLASH";
+                        case ATokenType::ROUND_BRACKET_OPEN: return "ROUND_BRACKET_OPEN";
+                        case ATokenType::ROUND_BRACKET_CLOSE: return "ROUND_BRACKET_CLOSE";
                     }
                     return "UNKNOWN";
                 }

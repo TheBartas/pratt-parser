@@ -1,9 +1,9 @@
 #include <memory>
 
-#include "lexer.hpp"
-#include "parser.hpp"
-#include "ast.hpp"
-#include "debug.hpp"
+#include <lexer.hpp>
+#include <parser.hpp>
+#include <ast.hpp>
+#include <debug.hpp>
 
 int main() {
     // Aliases
@@ -12,10 +12,11 @@ int main() {
     using AConfig = ::pratt::ast::context::ASTPrintableContextCfg;
 
     // Examples
-    std::string ex1 = "4 + 5 * 5 / var";
+    std::string ex1 = "(4 + 5) * 5 / var"; // ( / ( * ( + 4 5 ) 5 ) var )
+    std::string ex2 = "(4 * (var - 34) / 5 + 2)"; // + ( / ( * ( - ( var 34 ) ) 4 ) 5 ) 2
 
     // Lexer
-    ALexer lexer(std::string_view{ex1});
+    ALexer lexer(std::string_view{ex2});
     const auto tokens = lexer.tokenize();
 
     PRINT_TOKEN_STREAM(tokens);
