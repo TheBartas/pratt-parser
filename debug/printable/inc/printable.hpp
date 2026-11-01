@@ -11,31 +11,34 @@ namespace pratt::debug {
     using AToken = ::pratt::token::Token;
     using ATokenType = ::pratt::token::TokenType;
     using AExpr = ::pratt::ast::expr::Expr;
+    using ASTPrintConfig = ::pratt::ast::context::ASTPrintableContextCfg;
 }; // pratt::debug
 
 namespace pratt::debug {
-    class Printable final {
-        public:
-            static void printStream(const std::vector<AToken>&, std::ostream&);
-            static void printAST(const AExpr&);
+    namespace printable {
+        class Printable final {
+            public:
+                static void printStream(const std::vector<AToken>&, std::ostream&);
+                static void printAST(const AExpr&, const ASTPrintConfig&);
 
-        private:
-            static constexpr std::string_view getTokenName(ATokenType type) noexcept {
-                switch(type) {
-                    case ATokenType::UNEXCEPTED: return "UNEXCEPTED";
-                    case ATokenType::EoF: return "EoF";
-                    case ATokenType::IDENTIFIER: return "IDENTIFIER";
-                    case ATokenType::FLOAT: return "FLOAT";
-                    case ATokenType::INT: return "INT";
-                    case ATokenType::EQUAL: return "EQUAL";
-                    case ATokenType::PLUS: return "PLUS";
-                    case ATokenType::MINUS: return "MINUS";
-                    case ATokenType::ASTERISK: return "ASTERISK";
-                    case ATokenType::SLASH: return "SLASH";
+            private:
+                static constexpr std::string_view getTokenName(ATokenType type) noexcept {
+                    switch(type) {
+                        case ATokenType::UNEXCEPTED: return "UNEXCEPTED";
+                        case ATokenType::EoF: return "EoF";
+                        case ATokenType::IDENTIFIER: return "IDENTIFIER";
+                        case ATokenType::FLOAT: return "FLOAT";
+                        case ATokenType::INT: return "INT";
+                        case ATokenType::EQUAL: return "EQUAL";
+                        case ATokenType::PLUS: return "PLUS";
+                        case ATokenType::MINUS: return "MINUS";
+                        case ATokenType::ASTERISK: return "ASTERISK";
+                        case ATokenType::SLASH: return "SLASH";
+                    }
+                    return "UNKNOWN";
                 }
-                return "UNKNOWN";
-            }
-    };
+        };
+    }; // pratt::debug::printable
 }; // pratt::debug
 
 #endif

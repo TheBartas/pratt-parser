@@ -40,5 +40,8 @@
 # Build
 build/
 
+# VS Code
+.vscode/c_cpp_properties.json
+
 # debug information files
 *.dwo

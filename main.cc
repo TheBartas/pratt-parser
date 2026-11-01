@@ -2,13 +2,14 @@
 
 #include "lexer.hpp"
 #include "parser.hpp"
-#include "debug.hpp"
 #include "ast.hpp"
+#include "debug.hpp"
 
 int main() {
     // Aliases
     using ALexer = ::pratt::lexer::Lexer;
     using ASTNode = ::pratt::ast::expr::Expr;
+    using AConfig = ::pratt::ast::context::ASTPrintableContextCfg;
 
     // Examples
     std::string ex1 = "4 + 5 * 5 / var";
@@ -29,8 +30,8 @@ int main() {
             std::make_unique<::pratt::ast::expr::NumberExpr>("7")
         )
     );
-
-    PRINT_AST(AST);
+    const AConfig cfg{.open = "{ ", .close = " }"};
+    PRINT_AST_CONFIG(AST, cfg);
 
     // Parser
     ::pratt::parser::Parser parser{tokens};

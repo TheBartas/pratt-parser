@@ -1,5 +1,5 @@
-#ifndef PRATT_PARSING_AST
-#define PRATT_PARSING_AST
+#ifndef PRATT_PARSING_AST_H
+#define PRATT_PARSING_AST_H
 
 #include "expr.hpp"
 #include "expr_binary.hpp"
