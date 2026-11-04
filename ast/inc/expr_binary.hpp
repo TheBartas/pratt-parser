@@ -24,8 +24,8 @@ namespace pratt::ast {
                 
             private:
                 std::string_view op{};
-                ASTNode lhs;
-                ASTNode rhs;
+                ASTNode lhs{};
+                ASTNode rhs{};
 
         };
     }; // pratt::ast::expr

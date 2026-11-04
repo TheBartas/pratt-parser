@@ -39,13 +39,20 @@ namespace pratt::parser {
                 return std::make_unique<NumberNode>(token.getLexeme());
             case ATokenType::IDENTIFIER:
                 return std::make_unique<IdentifierNode>(token.getLexeme());
-            case ATokenType::ROUND_BRACKET_OPEN:
+            case ATokenType::ROUND_BRACKET_OPEN: {
                 auto expr = Parser::parseExpression(NUD);
 
                 if (Parser::peek().getType() != ATokenType::ROUND_BRACKET_CLOSE) std::runtime_error("[Error] Expected \")\"");
 
                 (void)Parser::advance();
                 return expr;
+            }
+            case ATokenType::MINUS: {
+                const auto& [_, r_bp] = Parser::prefixBindingPower(token.getType());
+                auto expr = Parser::parseExpression(r_bp);
+
+                return std::make_unique<UnaryNode>(token.getLexeme(), std::move(expr));
+            }   
         }
         throw std::runtime_error("[Error] Bad token in <parsePrefix>!"); // [TODO:0x0001]
     } 

@@ -14,9 +14,13 @@ int main() {
     // Examples
     std::string ex1 = "(4 + 5) * 5 / var"; // ( / ( * ( + 4 5 ) 5 ) var )
     std::string ex2 = "(4 * (var - 34) / 5 + 2)"; // + ( / ( * ( - ( var 34 ) ) 4 ) 5 ) 2
+    std::string ex3 = "-3";
+    std::string ex4 = "- 3";
+    std::string ex5 = "-3 * 5";
+    std::string ex6 = "(-3) + 4 * 6 -4";
 
     // Lexer
-    ALexer lexer(std::string_view{ex2});
+    ALexer lexer(std::string_view{ex3});
     const auto tokens = lexer.tokenize();
 
     PRINT_TOKEN_STREAM(tokens);

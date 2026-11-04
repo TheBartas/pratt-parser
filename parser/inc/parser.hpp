@@ -14,6 +14,7 @@
 #define L1_RIGHT_BP 11
 #define L2_LEFT_BP 20
 #define L2_RIGHT_BP 21
+#define PREFIX_BP_NEGATIVE_NUMBER 26
 
 namespace pratt::parser {
     using AToken = ::pratt::token::Token;
@@ -22,6 +23,7 @@ namespace pratt::parser {
     using BinaryNode = ::pratt::ast::expr::BinaryExpr;
     using NumberNode = ::pratt::ast::expr::NumberExpr;
     using IdentifierNode = ::pratt::ast::expr::IdentifierExpr;
+    using UnaryNode = ::pratt::ast::expr::UnaryExpr;
 }; // pratt::parser
 
 namespace pratt::parser {
@@ -45,6 +47,16 @@ namespace pratt::parser {
 
             ASTNode parsePrefix();
             bool parseInfix(const ATokenType) const;
+            
+            constexpr std::pair<uint16_t, uint16_t> prefixBindingPower(ATokenType type) const {
+                switch (type) {
+                    case ATokenType::MINUS:
+                        return {0, PREFIX_BP_NEGATIVE_NUMBER};
+                    default:
+                        return {0, 0};
+                }
+            }
+
             constexpr std::pair<uint16_t, uint16_t> infixBindingPower(ATokenType type) const {
                 switch (type) {
                     case ATokenType::MINUS:
