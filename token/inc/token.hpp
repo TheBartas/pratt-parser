@@ -17,7 +17,8 @@ namespace pratt::token {
         ASTERISK,
         SLASH,
         ROUND_BRACKET_OPEN,
-        ROUND_BRACKET_CLOSE
+        ROUND_BRACKET_CLOSE,
+        COMMA
     };
 
     class Token final {

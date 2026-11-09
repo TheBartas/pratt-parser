@@ -71,4 +71,6 @@ namespace pratt::parser {
                 throw std::runtime_error("[Error] Bad operator"); // [TODO:0x0001]
         }
     }
+
+
 }; // pratt::parser

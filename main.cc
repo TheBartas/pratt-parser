@@ -18,29 +18,30 @@ int main() {
     std::string ex4 = "- 3";
     std::string ex5 = "-3 * 5";
     std::string ex6 = "(-3) + 4 * 6 -4";
+    std::string ex7 = "pow(arg1, arg2)";
 
     // Lexer
-    ALexer lexer(std::string_view{ex3});
+    ALexer lexer(std::string_view{ex7});
     const auto tokens = lexer.tokenize();
 
     PRINT_TOKEN_STREAM(tokens);
 
-    // Example AST
-    const auto AST = ::pratt::ast::expr::BinaryExpr(
-        "+",
-        std::make_unique<::pratt::ast::expr::NumberExpr>("5"),
-        std::make_unique<::pratt::ast::expr::BinaryExpr>(
-            "*",
-            std::make_unique<::pratt::ast::expr::NumberExpr>("3"),
-            std::make_unique<::pratt::ast::expr::NumberExpr>("7")
-        )
-    );
-    const AConfig cfg{.open = "{ ", .close = " }"};
-    PRINT_AST_CONFIG(AST, cfg);
+    // // Example AST
+    // const auto AST = ::pratt::ast::expr::BinaryExpr(
+    //     "+",
+    //     std::make_unique<::pratt::ast::expr::NumberExpr>("5"),
+    //     std::make_unique<::pratt::ast::expr::BinaryExpr>(
+    //         "*",
+    //         std::make_unique<::pratt::ast::expr::NumberExpr>("3"),
+    //         std::make_unique<::pratt::ast::expr::NumberExpr>("7")
+    //     )
+    // );
+    // const AConfig cfg{.open = "{ ", .close = " }"};
+    // PRINT_AST_CONFIG(AST, cfg);
 
-    // Parser
-    ::pratt::parser::Parser parser{tokens};
-    const std::unique_ptr<::pratt::ast::expr::Expr> AST_TEST = parser.parse();
+    // // Parser
+    // ::pratt::parser::Parser parser{tokens};
+    // const std::unique_ptr<::pratt::ast::expr::Expr> AST_TEST = parser.parse();
 
-    PRINT_AST(*AST_TEST);
+    // PRINT_AST(*AST_TEST);
 }

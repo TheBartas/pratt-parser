@@ -75,10 +75,10 @@ namespace pratt::lexer {
             case ')':
                 return Lexer::handleToken(ATokenType::ROUND_BRACKET_CLOSE);
             case '=':
-                return Lexer::handleToken(ATokenType::EQUAL);        
+                return Lexer::handleToken(ATokenType::EQUAL);
+            case ',':
+                return Lexer::handleToken(ATokenType::COMMA);   
         }
-
-        return Lexer::handleToken(ATokenType::UNEXCEPTED);
     }
 
     // public
