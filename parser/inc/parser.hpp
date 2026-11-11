@@ -2,12 +2,14 @@
 #define PRATT_PARSING_PARSER_H
 
 #include <vector>
-#include <utility>
 #include <stdexcept>
 #include <string>
+#include <optional>
+#include <cstdint>
 
 #include "token.hpp"
 #include "ast.hpp"
+#include "context/context.hpp"
 
 #define NUD 0
 #define L1_LEFT_BP 10
@@ -43,30 +45,31 @@ namespace pratt::parser {
 
             inline bool is_at_end() const { return tokens[current].getType() == ATokenType::EoF; }
 
-            ASTNode parseExpression(uint16_t);
-
-            ASTNode parsePrefix();
-            bool parseInfix(const ATokenType) const;
+            ASTNode parseExpression(std::uint16_t);
+            ASTNode parsePrefix(); // Parsing NUD
             
-            constexpr std::pair<uint16_t, uint16_t> prefixBindingPower(ATokenType type) const {
+            constexpr context::BindingPower prefixBindingPower(ATokenType type) {
                 switch (type) {
                     case ATokenType::MINUS:
-                        return {0, PREFIX_BP_NEGATIVE_NUMBER};
+                        return context::BindingPower{0, PREFIX_BP_NEGATIVE_NUMBER};
                     default:
-                        return {0, 0};
+                        return context::BindingPower{0, 0};
                 }
             }
 
-            constexpr std::pair<uint16_t, uint16_t> infixBindingPower(ATokenType type) const {
+            constexpr std::optional<context::BindingPower> infixBindingPower(ATokenType type) {
                 switch (type) {
                     case ATokenType::MINUS:
                     case ATokenType::PLUS:
-                        return {L1_LEFT_BP, L1_RIGHT_BP};
+                        return context::BindingPower{L1_LEFT_BP, L1_RIGHT_BP};
                     case ATokenType::SLASH:
                     case ATokenType::ASTERISK:
-                        return {L2_LEFT_BP, L2_RIGHT_BP};
+                        return context::BindingPower{L2_LEFT_BP, L2_RIGHT_BP};
+                    case ATokenType::ROUND_BRACKET_CLOSE:
+                    case ATokenType::EoF:
+                        return std::nullopt;
                     default:
-                        return {0, 0};
+                        throw std::runtime_error("[Error] Bad operator!"); // [TODO:0x0001]
                 }
             }
 
