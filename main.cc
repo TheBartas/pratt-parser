@@ -19,9 +19,11 @@ int main() {
     std::string ex5 = "-3 * 5";
     std::string ex6 = "(-3) + 4 * 6 -4";
     std::string ex7 = "pow(arg1, arg2)";
+    std::string ex8 = "(4 + 3) * 4";
+    std::string ex9 = "4 + 3 5"; // throws an error
 
     // Lexer
-    ALexer lexer(std::string_view{ex1});
+    ALexer lexer(std::string_view{ex9});
     const auto tokens = lexer.tokenize();
 
     PRINT_TOKEN_STREAM(tokens);

@@ -6,7 +6,14 @@ namespace pratt::parser {
         : tokens{std::move(_tokens)} {}
 
     ASTNode Parser::parse() {
-        return Parser::parseExpression(NUD);
+        auto expr = Parser::parseExpression(NUD);
+
+        if (Parser::peek().getType() != ATokenType::EoF) {
+            std::string msg = "[Error] Unexpected token <" + std::string(Parser::peek().getLexeme()) + ">!";
+            throw std::runtime_error(msg); // [TODO:0x0001]
+        }
+
+        return expr;
     }
 
     // private

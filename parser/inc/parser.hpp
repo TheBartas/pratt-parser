@@ -48,7 +48,7 @@ namespace pratt::parser {
             ASTNode parseExpression(std::uint16_t);
             ASTNode parsePrefix(); // Parsing NUD
             
-            constexpr context::BindingPower prefixBindingPower(ATokenType type) {
+            constexpr context::BindingPower prefixBindingPower(ATokenType type) noexcept {
                 switch (type) {
                     case ATokenType::MINUS:
                         return context::BindingPower{0, PREFIX_BP_NEGATIVE_NUMBER};
@@ -57,7 +57,7 @@ namespace pratt::parser {
                 }
             }
 
-            constexpr std::optional<context::BindingPower> infixBindingPower(ATokenType type) {
+            constexpr std::optional<context::BindingPower> infixBindingPower(ATokenType type) noexcept {
                 switch (type) {
                     case ATokenType::MINUS:
                     case ATokenType::PLUS:
@@ -65,11 +65,8 @@ namespace pratt::parser {
                     case ATokenType::SLASH:
                     case ATokenType::ASTERISK:
                         return context::BindingPower{L2_LEFT_BP, L2_RIGHT_BP};
-                    case ATokenType::ROUND_BRACKET_CLOSE:
-                    case ATokenType::EoF:
-                        return std::nullopt;
                     default:
-                        throw std::runtime_error("[Error] Bad operator!"); // [TODO:0x0001]
+                        return std::nullopt;
                 }
             }
 
