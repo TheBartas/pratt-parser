@@ -9,6 +9,9 @@ namespace pratt::ast {
             std::string open{"( "};
             std::string close{" )"};
             std::string space{" "};
+            std::string openFunListArgs{"|"};
+            std::string closeFunListArgs{"|"};
+            std::string spBeArgs{","};
         };
     }; // pratt::ast::context
 }; // pratt::ast

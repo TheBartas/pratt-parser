@@ -6,5 +6,6 @@
 #include "expr_identifier.hpp"
 #include "expr_number.hpp"
 #include "expr_unary.hpp"
+#include "expr_function_call.hpp"
 
 #endif

@@ -17,6 +17,8 @@
 #define L2_LEFT_BP 20
 #define L2_RIGHT_BP 21
 #define PREFIX_BP_NEGATIVE_NUMBER 26
+#define POSTFIX_BP 26
+#define NEXT 1
 
 namespace pratt::parser {
     using AToken = ::pratt::token::Token;
@@ -26,6 +28,7 @@ namespace pratt::parser {
     using NumberNode = ::pratt::ast::expr::NumberExpr;
     using IdentifierNode = ::pratt::ast::expr::IdentifierExpr;
     using UnaryNode = ::pratt::ast::expr::UnaryExpr;
+    using FunctionCallNode = ::pratt::ast::expr::FunctionCallExpr;
 }; // pratt::parser
 
 namespace pratt::parser {
@@ -47,6 +50,9 @@ namespace pratt::parser {
 
             ASTNode parseExpression(std::uint16_t);
             ASTNode parsePrefix(); // Parsing NUD
+            std::unique_ptr<FunctionCallNode> parseFunctionCall(ASTNode, std::uint16_t);
+
+
             
             constexpr context::BindingPower prefixBindingPower(ATokenType type) noexcept {
                 switch (type) {
@@ -66,7 +72,16 @@ namespace pratt::parser {
                     case ATokenType::ASTERISK:
                         return context::BindingPower{L2_LEFT_BP, L2_RIGHT_BP};
                     default:
-                        return std::nullopt;
+                        return std::nullopt; // [ EoF, COMMA ]
+                }
+            }
+
+            constexpr std::optional<context::BindingPower> postfixBindingPower(ATokenType type) noexcept {
+                switch (type) {
+                    case ATokenType::ROUND_BRACKET_OPEN:
+                        return context::BindingPower{POSTFIX_BP, 0};
+                    default:
+                        return std::nullopt; // [ EoF, COMMA ]
                 }
             }
 

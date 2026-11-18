@@ -17,21 +17,34 @@ namespace pratt::parser {
     }
 
     // private
-    ASTNode Parser::parseExpression(std::uint16_t min_bp) {
-        auto lhs = Parser::parsePrefix();
+    ASTNode Parser::parseExpression(std::uint16_t minBp) {
+        ASTNode lhs = Parser::parsePrefix();
         
         while (true) {
             const auto& op = Parser::peek();
             const auto type = op.getType();
 
-            const auto bp = Parser::infixBindingPower(type);
+            if (const auto& postfixBp = Parser::postfixBindingPower(type)) {
+                if (postfixBp->left < minBp) break;
+                (void)Parser::advance();
 
-            if (!bp || bp->left < min_bp) break;
+                if (type == ATokenType::ROUND_BRACKET_OPEN) {
+                    lhs = std::move(Parser::parseFunctionCall(std::move(lhs), postfixBp->right));
+                }
+                continue;
+            }
 
-            (void)Parser::advance();
+            if (const auto& infixBp = Parser::infixBindingPower(type)) {
+                if (infixBp->left < minBp) break;
+                (void)Parser::advance();
 
-            auto rhs = Parser::parseExpression(bp->right);
-            lhs = std::make_unique<BinaryNode>(op.getLexeme(), std::move(lhs), std::move(rhs));
+                auto rhs = Parser::parseExpression(infixBp->right);
+                lhs = std::make_unique<BinaryNode>(op.getLexeme(), std::move(lhs), std::move(rhs));
+
+                continue;
+            }
+
+            break;
         }
         return lhs;
     }
@@ -61,5 +74,14 @@ namespace pratt::parser {
             }   
         }
         throw std::runtime_error("[Error] Bad token in <parsePrefix>!"); // [TODO:0x0001]
+    }
+
+    std::unique_ptr<FunctionCallNode> Parser::parseFunctionCall(ASTNode callee, std::uint16_t bp) {
+        std::vector<ASTNode> args{};
+        while(true) {
+            args.emplace_back(Parser::parseExpression(bp));
+            if (Parser::advance().getType() == ATokenType::ROUND_BRACKET_CLOSE) break;
+        }
+        return std::make_unique<FunctionCallNode>(std::move(callee), std::move(args));
     }
 }; // pratt::parser

@@ -21,9 +21,11 @@ int main() {
     std::string ex7 = "pow(arg1, arg2)";
     std::string ex8 = "(4 + 3) * 4";
     std::string ex9 = "4 + 3 5"; // throws an error
+    std::string ex10 = "4";
+    std::string ex11 = "a + pow(factor, N + 1)";
 
     // Lexer
-    ALexer lexer(std::string_view{ex9});
+    ALexer lexer(std::string_view{ex11});
     const auto tokens = lexer.tokenize();
 
     PRINT_TOKEN_STREAM(tokens);
@@ -45,5 +47,7 @@ int main() {
     ::pratt::parser::Parser parser{tokens};
     const std::unique_ptr<::pratt::ast::expr::Expr> AST_TEST = parser.parse();
 
-    PRINT_AST(*AST_TEST);
+
+    const AConfig cfg2{.open = " ( ", .close = " ) "};
+    PRINT_AST_CONFIG(*AST_TEST, cfg2);
 }
