@@ -16,9 +16,9 @@
 #define L1_RIGHT_BP 11
 #define L2_LEFT_BP 20
 #define L2_RIGHT_BP 21
+#define ASSIGN_BP 1
 #define PREFIX_BP_NEGATIVE_NUMBER 26
 #define POSTFIX_BP 26
-#define NEXT 1
 
 namespace pratt::parser {
     using AToken = ::pratt::token::Token;
@@ -71,6 +71,8 @@ namespace pratt::parser {
                     case ATokenType::SLASH:
                     case ATokenType::ASTERISK:
                         return context::BindingPower{L2_LEFT_BP, L2_RIGHT_BP};
+                    case ATokenType::EQUAL:
+                        return context::BindingPower{0, ASSIGN_BP};
                     default:
                         return std::nullopt; // [ EoF, COMMA ]
                 }
